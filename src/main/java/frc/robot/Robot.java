@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.TimedRobot; // Include FRC TimedRobot files.
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser; // Include files for sending and receving data.
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; // Iclude files for smart dashboard
@@ -12,6 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; // Iclude files for 
 import frc.robot.autonomous.AutoAction; //Include all other project files
 import frc.robot.autonomous.AutoMode; //Include all other project files
 import frc.robot.systems.*; //Include all other project files
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,7 +34,8 @@ public class Robot extends TimedRobot {
  
   int AutonomousTime = 50;
   //Drive Motor Controllers now in Driver system
-
+  public SparkMax elevatorMotor1 = new SparkMax(10, MotorType.kBrushless);
+  public SparkMax elevatorMotor2 = new SparkMax(13, MotorType.kBrushless);
   //Systems
   public static Driver driver; // Initalize the variable for the  driver system
  // public static Shooter shooter; // Initalize the variable for the shooter system
@@ -158,13 +166,22 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when test mode is enabled. */
   @Override
-  public void testInit() {}
+  public void testInit() {
+  Util.log("\n\n\n\n\n\n\n\n\nSETUP!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+   SparkMaxConfig motor1Config = new SparkMaxConfig();
+   motor1Config.inverted(false);
+   elevatorMotor1.configure(motor1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+   SparkMaxConfig motor2Config = new SparkMaxConfig();
+   motor2Config.inverted(true);
+   elevatorMotor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {
-
-  }
+   public void testPeriodic() {
+    elevatorMotor1.set(0.05);
+    elevatorMotor2.set(0.05);
+  } 
 
   /** This function is called once when the robot is first started up. */
   @Override
