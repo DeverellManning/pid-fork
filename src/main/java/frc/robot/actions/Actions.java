@@ -26,6 +26,11 @@ public enum Actions {
   //  loaderIntakeAnalog (new AnalogAction((Float x) -> {if (x>0.6) {Robot.loader.intake(); return true;} else if (x>0.2f && x<0.6f) {Robot.loader.stopBay(); return false;} return false;})), // Intake the notes with the analog triggers
   //  loaderEjectAnalog (new AnalogAction((Float x) -> {if (x>0.5) Robot.loader.ejectNote(); return true;})), // Eject the notes with the analog triggers
     
+    //Elevator Actions
+    elevatorRaise (new ButtonAction(() -> {Robot.elevator.elevatorUp(); return true;})), // Move the elevator up
+    elevatorLower (new ButtonAction(() -> {Robot.elevator.elevatorDown(); return true;})), // Move the elevator down
+    elevatorLoad (new ButtonAction(() -> {Robot.elevator.setElevatorPosition(1); return true;})), // Set the elevator to a specific position
+
     //Camera Actions
     cameraLeft (new ButtonAction(() -> {Robot.vision.backCameraMove(-1); return true;})), // Move the camera left
     cameraRight (new ButtonAction(() -> {Robot.vision.backCameraMove(1); return true;})), // Move the camera right

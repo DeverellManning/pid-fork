@@ -1,5 +1,8 @@
 {
     "Buttons": [
+        {"RightBumper": "elevatorRaise"},
+        {"LeftBumper": "elevatorLower"},
+        {"A": "elevatorLoad"}
     ],
 
     "Analogs": [
