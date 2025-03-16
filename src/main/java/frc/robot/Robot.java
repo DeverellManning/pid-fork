@@ -34,8 +34,7 @@ public class Robot extends TimedRobot {
  
   int AutonomousTime = 50;
   //Drive Motor Controllers now in Driver system
-  public SparkMax elevatorMotor1 = new SparkMax(10, MotorType.kBrushless);
-  public SparkMax elevatorMotor2 = new SparkMax(13, MotorType.kBrushless);
+
   //Systems
   public static Driver driver; // Initalize the variable for the  driver system
  // public static Shooter shooter; // Initalize the variable for the shooter system
@@ -43,6 +42,7 @@ public class Robot extends TimedRobot {
  // public static Lifter lifter; // Initalize the variable for the lifter system
  // public static Loader loader; // Initalize the variable for the loader system
   public static Vision vision; // Initalize the variable for the vision system
+  public static Elevator elevator; // Initalize the variable for the elevator system
 
   AutoMode auto1; // Autonomous mode for testing
   private AutoMode autoPrime; // Autonomous mode for driving forward
@@ -60,7 +60,7 @@ public class Robot extends TimedRobot {
    // lifter = new Lifter(); // Initialize the lifter system
    // loader = new Loader(); // Initialize the loader system
     vision = new Vision(); // Initialize the vision system
-
+    elevator = new Elevator(); // Initialize the elevator system
     //Set up actions
     //WIP
 
@@ -167,20 +167,13 @@ public class Robot extends TimedRobot {
   /** This function is called once when test mode is enabled. */
   @Override
   public void testInit() {
-  Util.log("\n\n\n\n\n\n\n\n\nSETUP!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-   SparkMaxConfig motor1Config = new SparkMaxConfig();
-   motor1Config.inverted(false);
-   elevatorMotor1.configure(motor1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-   SparkMaxConfig motor2Config = new SparkMaxConfig();
-   motor2Config.inverted(true);
-   elevatorMotor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+   // elevator.test(0.1);
   }
 
   /** This function is called periodically during test mode. */
   @Override
    public void testPeriodic() {
-    elevatorMotor1.set(0.05);
-    elevatorMotor2.set(0.05);
+    elevator.test(0.05);
   } 
 
   /** This function is called once when the robot is first started up. */
