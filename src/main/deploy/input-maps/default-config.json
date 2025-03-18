@@ -7,9 +7,8 @@
 
     "Analogs": [
         {"LeftStickY": "setLeftDriveSpeed"},
-        {"RightStickY": "setRightDriveSpeed"},
+        {"RightStickY": "setRightDriveSpeed"}
 
-        {"LeftTrigger": "loaderIntakeAnalog"},
-        {"RightTrigger": "loaderEjectAnalog"}
+     
     ]
 }

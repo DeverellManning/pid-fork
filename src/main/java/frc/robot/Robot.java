@@ -148,6 +148,7 @@ public class Robot extends TimedRobot {
    // shooter.update(); // Update the shooter system
    // lifter.update(); // Update the lifter system
    // loader.update(); // Update the loader system
+   elevator.update();
     vision.update(); // Update the vision system
   }
 
@@ -173,7 +174,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
    public void testPeriodic() {
-    elevator.test(0.05);
+    elevator.update();
+    controller.update();
+    //Util.log(elevator.desiredElevatorPosition);
   } 
 
   /** This function is called once when the robot is first started up. */

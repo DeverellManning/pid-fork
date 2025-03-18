@@ -29,7 +29,7 @@ public enum Actions {
     //Elevator Actions
     elevatorRaise (new ButtonAction(() -> {Robot.elevator.elevatorUp(); return true;})), // Move the elevator up
     elevatorLower (new ButtonAction(() -> {Robot.elevator.elevatorDown(); return true;})), // Move the elevator down
-    elevatorLoad (new ButtonAction(() -> {Robot.elevator.setElevatorPosition(1); return true;})), // Set the elevator to a specific position
+    elevatorLoad (new ButtonAction(() -> {Robot.elevator.setElevatorPosition(3); return true;})), // Set the elevator to a specific position
 
     //Camera Actions
     cameraLeft (new ButtonAction(() -> {Robot.vision.backCameraMove(-1); return true;})), // Move the camera left

@@ -11,9 +11,9 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 public class Elevator extends System {
    private double motorPosition;
 
-   private double largeElevatorSpeed = 0.3;
-   private double mediumElevatorSpeed = 0.15;
-   private double smallElavatorSpeed = 0.01;
+   private double largeElevatorSpeed = 0.25;
+   private double mediumElevatorSpeed = 0.1;
+   private double smallElavatorSpeed = 0.03;
 
    private double motorVelocity = 0;
 
@@ -22,14 +22,14 @@ public class Elevator extends System {
    private int maxElevatorLevel = 5;
 
    private double elevatorPosition0 = 0;
-   private double elevatorPosition1 = 0.01;
-   private double elevatorPosition2 = 0.02;
-   private double elevatorPosition3 = 0.03;
-   private double elevatorPosition4 = 0.04;
-   private double elevatorPosition5 = 0.05;
+   private double elevatorPosition1 = 10;
+   private double elevatorPosition2 = 15;
+   private double elevatorPosition3 = 20;
+   private double elevatorPosition4 = 25;
+   private double elevatorPosition5 = 30;
 
-   private double largeRotations = 2;
-   private double mediumRotations = 0.3;
+   private double largeRotations = 3;
+   private double mediumRotations = 0.5;
    //private double smallRotations = 2;
 
     private SparkMax elevatorMotor1 = new SparkMax(10, MotorType.kBrushless);
@@ -41,9 +41,9 @@ public class Elevator extends System {
         motor1Config.inverted(false);
         motor1Config.softLimit
         .forwardSoftLimitEnabled(false)
-        .forwardSoftLimit(0.2)
+        .forwardSoftLimit(15)
         .reverseSoftLimitEnabled(false)
-        .reverseSoftLimit(0.2);
+        .reverseSoftLimit(0);
         motor1Config.idleMode(IdleMode.kBrake);
         elevatorMotor1.configure(motor1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -52,9 +52,9 @@ public class Elevator extends System {
         motor2Config.inverted(true);
         motor2Config.softLimit
         .forwardSoftLimitEnabled(false)
-        .forwardSoftLimit(0.2)
+        .forwardSoftLimit(15)
         .reverseSoftLimitEnabled(false)
-        .reverseSoftLimit(0.2);
+        .reverseSoftLimit(15);
         motor2Config.idleMode(IdleMode.kBrake);
         elevatorMotor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
@@ -108,6 +108,9 @@ public class Elevator extends System {
                         motorVelocity = -mediumElevatorSpeed;
                     } else {
                         motorVelocity = -smallElavatorSpeed;
+                        if (Math.abs(elevatorPosition0 - motorPosition) <= 0.15){
+                            motorVelocity = 0;
+                        }
                     }
                 } else if (elevatorPosition0 > motorPosition){
                     motorVelocity = 0;
@@ -126,6 +129,9 @@ public class Elevator extends System {
                         motorVelocity = -mediumElevatorSpeed;
                     } else {
                         motorVelocity = -smallElavatorSpeed;
+                        if (Math.abs(elevatorPosition1 - motorPosition) <= 0.15){
+                            motorVelocity = 0;
+                        }
                     }
                 } else if (elevatorPosition1 > motorPosition){
                     if (Math.abs(elevatorPosition1 - motorPosition) >= largeRotations){
@@ -134,6 +140,9 @@ public class Elevator extends System {
                         motorVelocity = mediumElevatorSpeed;
                     } else {
                         motorVelocity = smallElavatorSpeed;
+                        if (Math.abs(elevatorPosition1 - motorPosition) <= 0.15){
+                            motorVelocity = 0;
+                        }
                     }
                 } else {
                     motorVelocity = 0;
@@ -151,6 +160,9 @@ public class Elevator extends System {
                     motorVelocity = -mediumElevatorSpeed;
                 } else {
                     motorVelocity = -smallElavatorSpeed;
+                    if (Math.abs(elevatorPosition2 - motorPosition) <= 0.15){
+                        motorVelocity = 0;
+                    }
                 }
             } else if (elevatorPosition2 > motorPosition){
                 if (Math.abs(elevatorPosition2 - motorPosition) >= largeRotations){
@@ -159,6 +171,9 @@ public class Elevator extends System {
                     motorVelocity = mediumElevatorSpeed;
                 } else {
                     motorVelocity = smallElavatorSpeed;
+                    if (Math.abs(elevatorPosition2 - motorPosition) <= 0.15){
+                        motorVelocity = 0;
+                    }
                 }
             } else {
                 motorVelocity = 0;
@@ -176,6 +191,9 @@ public class Elevator extends System {
                     motorVelocity = -mediumElevatorSpeed;
                 } else {
                     motorVelocity = -smallElavatorSpeed;
+                    if (Math.abs(elevatorPosition3 - motorPosition) <= 0.15){
+                        motorVelocity = 0;
+                    }
                 }
             } else if (elevatorPosition3 > motorPosition){
                 if (Math.abs(elevatorPosition3 - motorPosition) >= largeRotations){
@@ -184,6 +202,9 @@ public class Elevator extends System {
                     motorVelocity = mediumElevatorSpeed;
                 } else {
                     motorVelocity = smallElavatorSpeed;
+                    if (Math.abs(elevatorPosition3 - motorPosition) <= 0.15){
+                        motorVelocity = 0;
+                    }
                 }
             } else {
                 motorVelocity = 0;
@@ -203,6 +224,9 @@ public class Elevator extends System {
                     motorVelocity = -mediumElevatorSpeed;
                 } else {
                     motorVelocity = -smallElavatorSpeed;
+                    if (Math.abs(elevatorPosition4 - motorPosition) <= 0.15){
+                        motorVelocity = 0;
+                    }
                 }
             } else if (elevatorPosition4 > motorPosition){
                 if (Math.abs(elevatorPosition4 - motorPosition) >= largeRotations){
@@ -211,6 +235,9 @@ public class Elevator extends System {
                     motorVelocity = mediumElevatorSpeed;
                 } else {
                     motorVelocity = smallElavatorSpeed;
+                    if (Math.abs(elevatorPosition4 - motorPosition) <= 0.15){
+                        motorVelocity = 0;
+                    }
                 }
             } else {
                 motorVelocity = 0;
@@ -230,6 +257,9 @@ public class Elevator extends System {
                         motorVelocity = -mediumElevatorSpeed;
                     } else {
                         motorVelocity = -smallElavatorSpeed;
+                        if (Math.abs(elevatorPosition5 - motorPosition) <= 0.15){
+                            motorVelocity = 0;
+                        }
                     }
                 } else if (elevatorPosition5 > motorPosition){
                     if (Math.abs(elevatorPosition5 - motorPosition) >= largeRotations){
@@ -238,6 +268,9 @@ public class Elevator extends System {
                         motorVelocity = mediumElevatorSpeed;
                     } else {
                         motorVelocity = smallElavatorSpeed;
+                        if (Math.abs(elevatorPosition5 - motorPosition) <= 0.15){
+                            motorVelocity = 0;
+                        }
                     }
                 } else {
                     motorVelocity = 0;
@@ -246,6 +279,7 @@ public class Elevator extends System {
         }
         elevatorMotor1.set(motorVelocity);
         elevatorMotor2.set(motorVelocity);
+        Util.log(String.valueOf(desiredElevatorPosition) +":::::::::::::::::"+ String.valueOf(motorVelocity));
     }
 
 }
