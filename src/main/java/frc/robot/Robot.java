@@ -13,11 +13,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; // Iclude files for 
 import frc.robot.autonomous.AutoAction; //Include all other project files
 import frc.robot.autonomous.AutoMode; //Include all other project files
 import frc.robot.systems.*; //Include all other project files
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+//import com.revrobotics.spark.SparkMax;
+//import com.revrobotics.spark.SparkBase.PersistMode;
+//import com.revrobotics.spark.SparkBase.ResetMode;
+//import com.revrobotics.spark.SparkLowLevel.MotorType;
+//import com.revrobotics.spark.config.SparkMaxConfig;
 
 
 /**
@@ -174,8 +176,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
    public void testPeriodic() {
-    elevator.update();
-    controller.update();
+    
+  // Util.log(String.valueOf(Math.round(elevator.getEncoder()* Math.pow(10,2))));
+   Util.log(String.valueOf(elevator.getEncoder()));
     //Util.log(elevator.desiredElevatorPosition);
   } 
 

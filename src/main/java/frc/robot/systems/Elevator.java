@@ -44,7 +44,7 @@ public class Elevator extends System {
         .forwardSoftLimit(15)
         .reverseSoftLimitEnabled(false)
         .reverseSoftLimit(0);
-        motor1Config.idleMode(IdleMode.kBrake);
+        motor1Config.idleMode(IdleMode.kCoast);
         elevatorMotor1.configure(motor1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 
@@ -55,7 +55,7 @@ public class Elevator extends System {
         .forwardSoftLimit(15)
         .reverseSoftLimitEnabled(false)
         .reverseSoftLimit(15);
-        motor2Config.idleMode(IdleMode.kBrake);
+        motor2Config.idleMode(IdleMode.kCoast);
         elevatorMotor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
         elevatorMotor1.getEncoder().setPosition(0.0);
@@ -77,6 +77,11 @@ public class Elevator extends System {
             desiredElevatorPosition = minElevatorLevel;
         }
     }
+
+    public double getEncoder(){
+        return elevatorMotor1.getEncoder().getPosition();
+    }
+
 
     public boolean setElevatorPosition(int position){
         if(position > maxElevatorLevel){
