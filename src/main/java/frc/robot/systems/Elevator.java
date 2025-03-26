@@ -58,6 +58,7 @@ public class Elevator extends System {
         motor2Config.idleMode(IdleMode.kCoast);
         elevatorMotor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
+
         elevatorMotor1.getEncoder().setPosition(0.0);
         elevatorMotor2.getEncoder().setPosition(0.0);
 
