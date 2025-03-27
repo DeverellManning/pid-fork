@@ -1,8 +1,8 @@
 {
     "Buttons": [
-        {"Left": "measure"},
-        {"Up": "loaderRaise"},
-        {"Down": "loaderLower"}
+        {"A": "elevatorDown"},
+        {"B": "elevatorUp"},
+        {"X": "elevatorStop"}
         
     ],
 

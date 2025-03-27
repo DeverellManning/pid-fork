@@ -36,31 +36,31 @@ public class Elevator extends System {
     private SparkMax elevatorMotor2 = new SparkMax(13, MotorType.kBrushless);
 
     public Elevator(){
-        
+        elevatorMotor1.getEncoder().setPosition(0.0);
+        elevatorMotor2.getEncoder().setPosition(0.0);
         SparkMaxConfig motor1Config = new SparkMaxConfig();
         motor1Config.inverted(false);
         motor1Config.softLimit
-        .forwardSoftLimitEnabled(false)
-        .forwardSoftLimit(15)
-        .reverseSoftLimitEnabled(false)
+        .forwardSoftLimitEnabled(true)
+        .forwardSoftLimit(41)
+        .reverseSoftLimitEnabled(true)
         .reverseSoftLimit(0);
-        motor1Config.idleMode(IdleMode.kCoast);
+        motor1Config.idleMode(IdleMode.kBrake);
         elevatorMotor1.configure(motor1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 
         SparkMaxConfig motor2Config = new SparkMaxConfig();
         motor2Config.inverted(true);
         motor2Config.softLimit
-        .forwardSoftLimitEnabled(false)
-        .forwardSoftLimit(15)
-        .reverseSoftLimitEnabled(false)
-        .reverseSoftLimit(15);
-        motor2Config.idleMode(IdleMode.kCoast);
+        .forwardSoftLimitEnabled(true)
+        .forwardSoftLimit(41)
+        .reverseSoftLimitEnabled(true)
+        .reverseSoftLimit(0);
+        motor2Config.idleMode(IdleMode.kBrake);
         elevatorMotor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
 
-        elevatorMotor1.getEncoder().setPosition(0.0);
-        elevatorMotor2.getEncoder().setPosition(0.0);
+
 
        motorPosition = elevatorMotor1.getEncoder().getPosition(); // This value should be 0
     }
@@ -80,6 +80,8 @@ public class Elevator extends System {
     }
 
     public double getEncoder(int motor){
+
+
         if (motor == 1){
             return elevatorMotor1.getEncoder().getPosition();
         } else if (motor == 2){
@@ -88,7 +90,11 @@ public class Elevator extends System {
             return 0;
         }
     }
-
+    public boolean encoderSetZero(){
+        elevatorMotor1.getEncoder().setPosition(0.0);
+        elevatorMotor2.getEncoder().setPosition(0.0);
+        return true;
+    }
 
     public boolean setElevatorPosition(int position){
         if(position > maxElevatorLevel){
