@@ -79,8 +79,14 @@ public class Elevator extends System {
         }
     }
 
-    public double getEncoder(){
-        return elevatorMotor1.getEncoder().getPosition();
+    public double getEncoder(int motor){
+        if (motor == 1){
+            return elevatorMotor1.getEncoder().getPosition();
+        } else if (motor == 2){
+            return elevatorMotor2.getEncoder().getPosition();
+        } else {
+            return 0;
+        }
     }
 
 

@@ -150,7 +150,7 @@ public class Robot extends TimedRobot {
    // shooter.update(); // Update the shooter system
    // lifter.update(); // Update the lifter system
    // loader.update(); // Update the loader system
-   elevator.update();
+   //elevator.update();
     vision.update(); // Update the vision system
   }
 
@@ -178,7 +178,7 @@ public class Robot extends TimedRobot {
    public void testPeriodic() {
     
   // Util.log(String.valueOf(Math.round(elevator.getEncoder()* Math.pow(10,2))));
-   Util.log(String.valueOf(elevator.getEncoder()));
+   Util.log(String.valueOf(elevator.getEncoder(1)) + ":::::::" + String.valueOf(elevator.getEncoder(2)));
     //Util.log(elevator.desiredElevatorPosition);
   } 
 
