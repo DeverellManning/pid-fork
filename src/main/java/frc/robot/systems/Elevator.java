@@ -20,7 +20,7 @@ public class Elevator extends System {
    private int desiredElevatorPosition = 0;
    private int minElevatorLevel = 0;
    private int maxElevatorLevel = 5;
-
+   private double elevatorWeightCounter = 0.05;
    private double elevatorPosition0 = 0;
    private double elevatorPosition1 = 10;
    private double elevatorPosition2 = 15;
@@ -127,13 +127,13 @@ public class Elevator extends System {
                     } else {
                         motorVelocity = -smallElavatorSpeed;
                         if (Math.abs(elevatorPosition0 - motorPosition) <= 0.15){
-                            motorVelocity = 0;
+                            motorVelocity = elevatorWeightCounter;
                         }
                     }
                 } else if (elevatorPosition0 > motorPosition){
-                    motorVelocity = 0;
+                    motorVelocity = elevatorWeightCounter;
                 } else {
-                    motorVelocity = 0;
+                    motorVelocity = elevatorWeightCounter;
                 }
                 break;
             case 1:
@@ -148,7 +148,7 @@ public class Elevator extends System {
                     } else {
                         motorVelocity = -smallElavatorSpeed;
                         if (Math.abs(elevatorPosition1 - motorPosition) <= 0.15){
-                            motorVelocity = 0;
+                            motorVelocity = elevatorWeightCounter;
                         }
                     }
                 } else if (elevatorPosition1 > motorPosition){
@@ -159,11 +159,11 @@ public class Elevator extends System {
                     } else {
                         motorVelocity = smallElavatorSpeed;
                         if (Math.abs(elevatorPosition1 - motorPosition) <= 0.15){
-                            motorVelocity = 0;
+                            motorVelocity = elevatorWeightCounter;
                         }
                     }
                 } else {
-                    motorVelocity = 0;
+                    motorVelocity = elevatorWeightCounter;
                 }
 
 
@@ -179,7 +179,7 @@ public class Elevator extends System {
                 } else {
                     motorVelocity = -smallElavatorSpeed;
                     if (Math.abs(elevatorPosition2 - motorPosition) <= 0.15){
-                        motorVelocity = 0;
+                        motorVelocity = elevatorWeightCounter;
                     }
                 }
             } else if (elevatorPosition2 > motorPosition){
@@ -190,11 +190,11 @@ public class Elevator extends System {
                 } else {
                     motorVelocity = smallElavatorSpeed;
                     if (Math.abs(elevatorPosition2 - motorPosition) <= 0.15){
-                        motorVelocity = 0;
+                        motorVelocity = elevatorWeightCounter;
                     }
                 }
             } else {
-                motorVelocity = 0;
+                motorVelocity = elevatorWeightCounter;
             }
 
 
@@ -210,7 +210,7 @@ public class Elevator extends System {
                 } else {
                     motorVelocity = -smallElavatorSpeed;
                     if (Math.abs(elevatorPosition3 - motorPosition) <= 0.15){
-                        motorVelocity = 0;
+                        motorVelocity = elevatorWeightCounter;
                     }
                 }
             } else if (elevatorPosition3 > motorPosition){
@@ -221,11 +221,11 @@ public class Elevator extends System {
                 } else {
                     motorVelocity = smallElavatorSpeed;
                     if (Math.abs(elevatorPosition3 - motorPosition) <= 0.15){
-                        motorVelocity = 0;
+                        motorVelocity = elevatorWeightCounter;
                     }
                 }
             } else {
-                motorVelocity = 0;
+                motorVelocity = elevatorWeightCounter;
             }
 
 
@@ -243,7 +243,7 @@ public class Elevator extends System {
                 } else {
                     motorVelocity = -smallElavatorSpeed;
                     if (Math.abs(elevatorPosition4 - motorPosition) <= 0.15){
-                        motorVelocity = 0;
+                        motorVelocity = elevatorWeightCounter;
                     }
                 }
             } else if (elevatorPosition4 > motorPosition){
@@ -254,11 +254,11 @@ public class Elevator extends System {
                 } else {
                     motorVelocity = smallElavatorSpeed;
                     if (Math.abs(elevatorPosition4 - motorPosition) <= 0.15){
-                        motorVelocity = 0;
+                        motorVelocity = elevatorWeightCounter;
                     }
                 }
             } else {
-                motorVelocity = 0;
+                motorVelocity = elevatorWeightCounter;
             }
 
 
@@ -276,7 +276,7 @@ public class Elevator extends System {
                     } else {
                         motorVelocity = -smallElavatorSpeed;
                         if (Math.abs(elevatorPosition5 - motorPosition) <= 0.15){
-                            motorVelocity = 0;
+                            motorVelocity = elevatorWeightCounter;
                         }
                     }
                 } else if (elevatorPosition5 > motorPosition){
@@ -287,11 +287,11 @@ public class Elevator extends System {
                     } else {
                         motorVelocity = smallElavatorSpeed;
                         if (Math.abs(elevatorPosition5 - motorPosition) <= 0.15){
-                            motorVelocity = 0;
+                            motorVelocity = elevatorWeightCounter;
                         }
                     }
                 } else {
-                    motorVelocity = 0;
+                    motorVelocity = elevatorWeightCounter;
                 }
                 break;
         }
