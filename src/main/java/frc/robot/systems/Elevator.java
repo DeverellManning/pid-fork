@@ -3,24 +3,20 @@ package frc.robot.systems;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
+
 import frc.robot.Util;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 public class Elevator extends System {
-   private double motorPosition;
-
-   private double largeElevatorSpeed = 0.25;
-   private double mediumElevatorSpeed = 0.1;
-   private double smallElavatorSpeed = 0.03;
-
-   private double motorVelocity = 0;
 
    private int desiredElevatorPosition = 0;
    private int minElevatorLevel = 0;
    private int maxElevatorLevel = 5;
-   private double elevatorWeightCounter = 0.05;
    private double elevatorPosition0 = 0;
    private double elevatorPosition1 = 10;
    private double elevatorPosition2 = 15;
@@ -32,8 +28,16 @@ public class Elevator extends System {
    private double mediumRotations = 0.5;
    //private double smallRotations = 2;
 
+
+
     private SparkMax elevatorMotor1 = new SparkMax(10, MotorType.kBrushless);
     private SparkMax elevatorMotor2 = new SparkMax(13, MotorType.kBrushless);
+
+    SparkClosedLoopController pid1;
+    SparkClosedLoopController pid2;
+    double target;
+
+    RelativeEncoder encoder;
 
     public Elevator(){
         elevatorMotor1.getEncoder().setPosition(0.0);
@@ -47,6 +51,8 @@ public class Elevator extends System {
         .reverseSoftLimit(0);
         motor1Config.idleMode(IdleMode.kBrake);
         elevatorMotor1.configure(motor1Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        motor1Config.closedLoop.pid(0.01, 0, 0);
+        pid1 = elevatorMotor1.getClosedLoopController();
 
 
         SparkMaxConfig motor2Config = new SparkMaxConfig();
@@ -58,11 +64,10 @@ public class Elevator extends System {
         .reverseSoftLimit(0);
         motor2Config.idleMode(IdleMode.kBrake);
         elevatorMotor2.configure(motor2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        motor2Config.closedLoop.pid(0.01, 0, 0);
+        pid2 = elevatorMotor2.getClosedLoopController();
         
-
-
-
-       motorPosition = elevatorMotor1.getEncoder().getPosition(); // This value should be 0
+       encoder = elevatorMotor1.getEncoder();
     }
 
     public void elevatorUp(){
@@ -111,193 +116,39 @@ public class Elevator extends System {
         elevatorMotor1.set(speed);
         elevatorMotor2.set(speed);
     }
+
+    public void moveToSetpoint(){
+        pid1.setReference(target, ControlType.kPosition);
+        pid2.setReference(target, ControlType.kPosition);
+    }
+
     
     public void update(){
-        motorPosition = elevatorMotor1.getEncoder().getPosition();
         
         switch(desiredElevatorPosition){
             case 0:
-
-
-                if (elevatorPosition0 < motorPosition){
-                    if (Math.abs(elevatorPosition0 - motorPosition) >= largeRotations){
-                        motorVelocity = -largeElevatorSpeed;
-                    } else if (Math.abs(elevatorPosition0 - motorPosition) >= mediumRotations){
-                        motorVelocity = -mediumElevatorSpeed;
-                    } else {
-                        motorVelocity = -smallElavatorSpeed;
-                        if (Math.abs(elevatorPosition0 - motorPosition) <= 0.15){
-                            motorVelocity = elevatorWeightCounter;
-                        }
-                    }
-                } else if (elevatorPosition0 > motorPosition){
-                    motorVelocity = elevatorWeightCounter;
-                } else {
-                    motorVelocity = elevatorWeightCounter;
-                }
+                target = elevatorPosition0;
                 break;
             case 1:
-
-
-
-                if (elevatorPosition1 < motorPosition){
-                    if (Math.abs(elevatorPosition1 - motorPosition) >= largeRotations){
-                        motorVelocity = -largeElevatorSpeed;
-                    } else if (Math.abs(elevatorPosition1 - motorPosition) >= mediumRotations){
-                        motorVelocity = -mediumElevatorSpeed;
-                    } else {
-                        motorVelocity = -smallElavatorSpeed;
-                        if (Math.abs(elevatorPosition1 - motorPosition) <= 0.15){
-                            motorVelocity = elevatorWeightCounter;
-                        }
-                    }
-                } else if (elevatorPosition1 > motorPosition){
-                    if (Math.abs(elevatorPosition1 - motorPosition) >= largeRotations){
-                        motorVelocity = largeElevatorSpeed;
-                    } else if (Math.abs(elevatorPosition1 - motorPosition) >= mediumRotations){
-                        motorVelocity = mediumElevatorSpeed;
-                    } else {
-                        motorVelocity = smallElavatorSpeed;
-                        if (Math.abs(elevatorPosition1 - motorPosition) <= 0.15){
-                            motorVelocity = elevatorWeightCounter;
-                        }
-                    }
-                } else {
-                    motorVelocity = elevatorWeightCounter;
-                }
-
-
+                target = elevatorPosition1;
                 break;
             case 2:
-
-
-            if (elevatorPosition2 < motorPosition){
-                if (Math.abs(elevatorPosition2 - motorPosition) >= largeRotations){
-                    motorVelocity = -largeElevatorSpeed;
-                } else if (Math.abs(elevatorPosition2 - motorPosition) >= mediumRotations){
-                    motorVelocity = -mediumElevatorSpeed;
-                } else {
-                    motorVelocity = -smallElavatorSpeed;
-                    if (Math.abs(elevatorPosition2 - motorPosition) <= 0.15){
-                        motorVelocity = elevatorWeightCounter;
-                    }
-                }
-            } else if (elevatorPosition2 > motorPosition){
-                if (Math.abs(elevatorPosition2 - motorPosition) >= largeRotations){
-                    motorVelocity = largeElevatorSpeed;
-                } else if (Math.abs(elevatorPosition2 - motorPosition) >= mediumRotations){
-                    motorVelocity = mediumElevatorSpeed;
-                } else {
-                    motorVelocity = smallElavatorSpeed;
-                    if (Math.abs(elevatorPosition2 - motorPosition) <= 0.15){
-                        motorVelocity = elevatorWeightCounter;
-                    }
-                }
-            } else {
-                motorVelocity = elevatorWeightCounter;
-            }
-
-
+                target = elevatorPosition2;
                 break;
             case 3:
-
-
-            if (elevatorPosition3 < motorPosition){
-                if (Math.abs(elevatorPosition3 - motorPosition) >= largeRotations){
-                    motorVelocity = -largeElevatorSpeed;
-                } else if (Math.abs(elevatorPosition3 - motorPosition) >= mediumRotations){
-                    motorVelocity = -mediumElevatorSpeed;
-                } else {
-                    motorVelocity = -smallElavatorSpeed;
-                    if (Math.abs(elevatorPosition3 - motorPosition) <= 0.15){
-                        motorVelocity = elevatorWeightCounter;
-                    }
-                }
-            } else if (elevatorPosition3 > motorPosition){
-                if (Math.abs(elevatorPosition3 - motorPosition) >= largeRotations){
-                    motorVelocity = largeElevatorSpeed;
-                } else if (Math.abs(elevatorPosition3 - motorPosition) >= mediumRotations){
-                    motorVelocity = mediumElevatorSpeed;
-                } else {
-                    motorVelocity = smallElavatorSpeed;
-                    if (Math.abs(elevatorPosition3 - motorPosition) <= 0.15){
-                        motorVelocity = elevatorWeightCounter;
-                    }
-                }
-            } else {
-                motorVelocity = elevatorWeightCounter;
-            }
-
-
-
+                target = elevatorPosition3;
                 break;
             case 4:
-
-
-
-            if (elevatorPosition4 < motorPosition){
-                if (Math.abs(elevatorPosition4 - motorPosition) >= largeRotations){
-                    motorVelocity = -largeElevatorSpeed;
-                } else if (Math.abs(elevatorPosition4 - motorPosition) >= mediumRotations){
-                    motorVelocity = -mediumElevatorSpeed;
-                } else {
-                    motorVelocity = -smallElavatorSpeed;
-                    if (Math.abs(elevatorPosition4 - motorPosition) <= 0.15){
-                        motorVelocity = elevatorWeightCounter;
-                    }
-                }
-            } else if (elevatorPosition4 > motorPosition){
-                if (Math.abs(elevatorPosition4 - motorPosition) >= largeRotations){
-                    motorVelocity = largeElevatorSpeed;
-                } else if (Math.abs(elevatorPosition4 - motorPosition) >= mediumRotations){
-                    motorVelocity = mediumElevatorSpeed;
-                } else {
-                    motorVelocity = smallElavatorSpeed;
-                    if (Math.abs(elevatorPosition4 - motorPosition) <= 0.15){
-                        motorVelocity = elevatorWeightCounter;
-                    }
-                }
-            } else {
-                motorVelocity = elevatorWeightCounter;
-            }
-
-
-
+                target = elevatorPosition4;
                 break;
             case 5:
-
-
-
-                if (elevatorPosition5 < motorPosition){
-                    if (Math.abs(elevatorPosition5 - motorPosition) >= largeRotations){
-                        motorVelocity = -largeElevatorSpeed;
-                    } else if (Math.abs(elevatorPosition5 - motorPosition) >= mediumRotations){
-                        motorVelocity = -mediumElevatorSpeed;
-                    } else {
-                        motorVelocity = -smallElavatorSpeed;
-                        if (Math.abs(elevatorPosition5 - motorPosition) <= 0.15){
-                            motorVelocity = elevatorWeightCounter;
-                        }
-                    }
-                } else if (elevatorPosition5 > motorPosition){
-                    if (Math.abs(elevatorPosition5 - motorPosition) >= largeRotations){
-                        motorVelocity = largeElevatorSpeed;
-                    } else if (Math.abs(elevatorPosition5 - motorPosition) >= mediumRotations){
-                        motorVelocity = mediumElevatorSpeed;
-                    } else {
-                        motorVelocity = smallElavatorSpeed;
-                        if (Math.abs(elevatorPosition5 - motorPosition) <= 0.15){
-                            motorVelocity = elevatorWeightCounter;
-                        }
-                    }
-                } else {
-                    motorVelocity = elevatorWeightCounter;
-                }
+                target = elevatorPosition5;
                 break;
+            default:
+            break;
         }
-        elevatorMotor1.set(motorVelocity);
-        elevatorMotor2.set(motorVelocity);
-        Util.log(String.valueOf(desiredElevatorPosition) +":::::::::::::::::"+ String.valueOf(motorVelocity));
+        moveToSetpoint();
+        Util.log(String.valueOf(target) +":::::::::::::::::"+ String.valueOf(elevatorMotor1.get()));
     }
 
 }
