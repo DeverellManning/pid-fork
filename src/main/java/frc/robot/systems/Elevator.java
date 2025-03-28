@@ -127,22 +127,22 @@ public class Elevator extends System {
         
         switch(desiredElevatorPosition){
             case 0:
-                target = elevatorPosition0;
+                target = -elevatorPosition0;
                 break;
             case 1:
-                target = elevatorPosition1;
+                target = -elevatorPosition1;
                 break;
             case 2:
-                target = elevatorPosition2;
+                target = -elevatorPosition2;
                 break;
             case 3:
-                target = elevatorPosition3;
+                target = -elevatorPosition3;
                 break;
             case 4:
-                target = elevatorPosition4;
+                target = -elevatorPosition4;
                 break;
             case 5:
-                target = elevatorPosition5;
+                target = -elevatorPosition5;
                 break;
             default:
             break;
