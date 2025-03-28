@@ -24,9 +24,9 @@ public class Elevator extends System {
    private double elevatorPosition4 = 25;
    private double elevatorPosition5 = 30;
 
-   private double largeRotations = 3;
-   private double mediumRotations = 0.5;
-   //private double smallRotations = 2;
+ //  private double largeRotations = 3;
+ //  private double mediumRotations = 0.5;
+ //  private double smallRotations = 2;
 
 
 
